@@ -1,5 +1,5 @@
 #!/bin/bash
-# Git bash prompt v0.1 (2012-04-04)
+# Git bash prompt v0.11 (2012-04-05)
 # By Romain Vimont (®om) <rom@rom1v.com>
 #
 # Save this file to ~/gitbashprompt and replace 'PS1' initialization by:
@@ -34,34 +34,38 @@ then
         tokens=($path)
         IFS="$SFI"
         i=0
-        curpath=
-        token="${tokens[$i]}"
-        while [ "$token" ]
+        count=${#tokens[@]}
+        while [ $i -lt $count ]
         do
+            token="${tokens[$i]}"
             etoken="$token"
-            if [ $i = 0 ]
+            if [ $i -gt 0 -o "$path" = / ]
             then
+                printf /
+                curpath="$curpath/"
+            else
                 if [ "$token" = "~" ]
                 then
                     etoken="'$HOME'"
                 fi
-            else
-                printf /
-                curpath="$curpath/"
             fi
-            curpath="$curpath$etoken"
-            printf "$token"
-            cd "$etoken"
-            if [ -d ".git" ]
+            if [ "$token" ]
             then
-                gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)"
-                if [ "$gitinfo" ]
-                then
-                    printf '$col'@"$gitinfo"'$nocol'
-                fi
+                curpath="$curpath$etoken"
+                printf "$token"
+                cd "$etoken"
+            else
+                cd /
             fi
+                if [ -d ".git" ]
+                then
+                    gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)"
+                    if [ "$gitinfo" ]
+                    then
+                        printf '$col'@"$gitinfo"'$nocol'
+                    fi
+                fi
             i=$(($i+1))
-            token="${tokens[$i]}"
         done
     )\$ '
 else
