@@ -1,0 +1,69 @@
+#!/bin/bash
+# Git bash prompt v0.1 (2012-04-04)
+# By Romain Vimont (®om) <rom@rom1v.com>
+#
+# Save this file to ~/gitbashprompt and replace 'PS1' initialization by:
+# . gitbashprompt
+#
+# See <http://blog.rom1v.com/2012/04/prompt-bash-pour-git/>
+
+# Styles (end or exact)
+#   end: ~/any/myproject/subfolder@branch
+#   exact: ~/any/myproject@branch/subfolder
+gbp_style=exact
+
+# Colors
+nocol='\[\e[0m\]'
+col='\[\e[34m\]' # blue
+
+if [ "$gbp_style" = end ]
+then
+    PS1='\u@\h:\w$(
+        gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)";
+        if [ "$gitinfo" ]
+        then
+            printf '$col'@"$gitinfo"'$nocol'
+        fi
+    )\$ '
+elif [ "$gbp_style" = exact ]
+then
+    PS1='\u@\h:$(
+        SFI="$IFS"
+        IFS=/
+        path="\w"
+        tokens=($path)
+        IFS="$SFI"
+        i=0
+        curpath=
+        token="${tokens[$i]}"
+        while [ "$token" ]
+        do
+            etoken="$token"
+            if [ $i = 0 ]
+            then
+                if [ "$token" = "~" ]
+                then
+                    etoken="'$HOME'"
+                fi
+            else
+                printf /
+                curpath="$curpath/"
+            fi
+            curpath="$curpath$etoken"
+            printf "$token"
+            cd "$etoken"
+            if [ -d ".git" ]
+            then
+                gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)"
+                if [ "$gitinfo" ]
+                then
+                    printf '$col'@"$gitinfo"'$nocol'
+                fi
+            fi
+            i=$(($i+1))
+            token="${tokens[$i]}"
+        done
+    )\$ '
+else
+    PS1='\u@\h:(incorrect git bash prompt style)\$'
+fi
