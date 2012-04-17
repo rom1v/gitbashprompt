@@ -1,5 +1,5 @@
 #!/bin/bash
-# Git bash prompt v0.11 (2012-04-05)
+# Git bash prompt v0.12 (2012-04-17)
 # By Romain Vimont (®om) <rom@rom1v.com>
 #
 # Save this file to ~/gitbashprompt and replace 'PS1' initialization by:
@@ -57,7 +57,7 @@ then
             else
                 cd /
             fi
-                if [ -d ".git" ]
+                if [ -e .git ]
                 then
                     gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)"
                     if [ "$gitinfo" ]
