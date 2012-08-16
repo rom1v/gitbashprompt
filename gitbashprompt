@@ -57,14 +57,14 @@ then
             else
                 cd /
             fi
-                if [ -e .git ]
+            if [ -e .git ]
+            then
+                gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)"
+                if [ "$gitinfo" ]
                 then
-                    gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)"
-                    if [ "$gitinfo" ]
-                    then
-                        printf '$col'@"$gitinfo"'$nocol'
-                    fi
+                    printf '$col'@"$gitinfo"'$nocol'
                 fi
+            fi
             i=$(($i+1))
         done
     )\$ '
