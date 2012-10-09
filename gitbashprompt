@@ -1,5 +1,5 @@
 #!/bin/bash
-# Git bash prompt v0.2 (2012-08-16)
+# Git bash prompt v0.2 (2012-10-09)
 # By Romain Vimont (®om) <rom@rom1v.com>
 #
 # Save this file to ~/gitbashprompt and replace 'PS1' initialization by:
@@ -9,8 +9,8 @@
 
 __git_bash_prompt() {
     # Colors
-    local nocol='\[\e[0m\]'
-    local col='\[\e[34m\]' # blue
+    local nocol='\001\e[0m\002'
+    local col='\001\e[34m\002' # blue
 
     SFI="$IFS"
     IFS=/
