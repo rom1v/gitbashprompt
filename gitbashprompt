@@ -46,7 +46,7 @@ __git_bash_prompt() {
     fi
         if [ -e .git ]
         then
-            gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)"
+            gitinfo="$(git branch 2>/dev/null | sed -n 's/^* //p')"
             if [ "$gitinfo" ]
             then
                 if [ "$gitinfo" = "(no branch)" ]
