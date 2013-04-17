@@ -1,9 +1,9 @@
 #!/bin/bash
-# Git bash prompt v0.2 (2012-10-09)
 # By Romain Vimont (®om) <rom@rom1v.com>
 #
-# Save this file to ~/gitbashprompt and replace 'PS1' initialization by:
-# . gitbashprompt
+# Link this file to ~/gitbashprompt and replace 'PS1' initialization in your
+# ~/.bashrc by:
+#    . /full/path/to/your/gitbashprompt
 #
 # See <http://blog.rom1v.com/2012/04/prompt-bash-pour-git/>
 
