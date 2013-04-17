@@ -10,7 +10,10 @@
 __git_bash_prompt() {
     # Colors
     local nocol='\001\e[0m\002'
+    # branch color
     local col='\001\e[36m\002' # blue
+    # detached HEAD color
+    local dcol='\001\e[31m\002' # red
 
     SFI="$IFS"
     IFS=/
@@ -46,7 +49,13 @@ __git_bash_prompt() {
             gitinfo="$(git branch 2>/dev/null | grep "^*" | cut -c3-)"
             if [ "$gitinfo" ]
             then
-                printf $col@"$gitinfo"$nocol
+                if [ "$gitinfo" = "(no branch)" ]
+                then
+                  gitinfo="$(git describe)"
+                  printf $col@$dcol"$gitinfo"$nocol
+                else
+                  printf $col@"$gitinfo"$nocol
+                fi
             fi
         fi
     i=$(($i+1))
