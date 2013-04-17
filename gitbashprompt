@@ -10,7 +10,7 @@
 __git_bash_prompt() {
     # Colors
     local nocol='\001\e[0m\002'
-    local col='\001\e[34m\002' # blue
+    local col='\001\e[36m\002' # blue
 
     SFI="$IFS"
     IFS=/
