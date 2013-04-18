@@ -51,7 +51,8 @@ __git_bash_prompt() {
             then
                 if [ "$gitinfo" = "(no branch)" ]
                 then
-                  gitinfo="$(git describe)"
+                  gitinfo="$(git describe 2>/dev/null ||
+                      git rev-list HEAD -1 | cut -c-7)"
                   printf $col@$dcol"$gitinfo"$nocol
                 else
                   printf $col@"$gitinfo"$nocol
