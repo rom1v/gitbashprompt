@@ -4,6 +4,9 @@
 # Link this file to ~/gitbashprompt and replace 'PS1' initialization in your
 # ~/.bashrc by:
 #    . /full/path/to/your/gitbashprompt
+# or:
+#    . /full/path/to/your/gitbashprompt '38;5;166'
+# (for colorizing prompt, see below)
 #
 # See <http://blog.rom1v.com/2012/04/prompt-bash-pour-git/>
 
@@ -13,8 +16,12 @@
 #   for i in {0..255}; do printf "\e[38;5;${i}m █ \\\e[38;5;${i}m\n"; done
 
 __no_color='\001\e[0m\002'
-__prompt_color="$__no_color"
-#__prompt_color='\001\e[38;5;166m\002' # orange
+if [ $# = 0 ]
+then
+  __prompt_color="$__no_color"
+else
+  __prompt_color="\001\e[$1m\002"
+fi
 
 __git_bash_prompt() {
     # default color
