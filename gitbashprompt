@@ -7,9 +7,18 @@
 #
 # See <http://blog.rom1v.com/2012/04/prompt-bash-pour-git/>
 
+# To print all the 16 colors:
+#   for i in {,'1;'}{30..37}; do printf "\e[${i}m █ \\\e[${i}m\n"; done
+# To print all the 256 colors:
+#   for i in {0..255}; do printf "\e[38;5;${i}m █ \\\e[38;5;${i}m\n"; done
+
+__no_color='\001\e[0m\002'
+__prompt_color="$__no_color"
+#__prompt_color='\001\e[38;5;166m\002' # orange
+
 __git_bash_prompt() {
-    # Colors
-    local nocol='\001\e[0m\002'
+    # default color
+    local pcol="$__prompt_color"
     # branch color
     local col='\001\e[36m\002' # blue
     # detached HEAD color
@@ -53,9 +62,9 @@ __git_bash_prompt() {
                 then
                   gitinfo="$(git describe 2>/dev/null ||
                       git rev-list HEAD -1 | cut -c-7)"
-                  printf $col@$dcol"$gitinfo"$nocol
+                  printf $col@$dcol"$gitinfo"$pcol
                 else
-                  printf $col@"$gitinfo"$nocol
+                  printf $col@"$gitinfo"$pcol
                 fi
             fi
         fi
@@ -63,4 +72,4 @@ __git_bash_prompt() {
     done
 }
 
-PS1='\u@\h:$(__git_bash_prompt "\w")\$ '
+PS1="$__prompt_color"'\u@\h:$(__git_bash_prompt "\w")\$'"$__no_color "
