@@ -65,9 +65,10 @@ __git_bash_prompt() {
             gitinfo="$(git branch 2>/dev/null | sed -n 's/^* //p')"
             if [ "$gitinfo" ]
             then
-                if [ "$gitinfo" = "(no branch)" ]
+                # if it starts by "("
+                if [[ "${gitinfo::1}" == "(" ]]
                 then
-                  gitinfo="$(git describe 2>/dev/null ||
+                  gitinfo="$(git describe --all 2>/dev/null ||
                       git rev-list HEAD -1 | cut -c-7)"
                   printf $col@$dcol"$gitinfo"$pcol
                 else
