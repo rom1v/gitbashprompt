@@ -38,21 +38,21 @@ __git_bash_prompt() {
     IFS="$SFI"
     local i=0
     local count=${#tokens[@]}
-    while [ $i -lt $count ]
+    while [[ $i -lt $count ]]
     do
         token="${tokens[$i]}"
         etoken="$token"
-        if [ $i -gt 0 -o "$path" = / ]
+        if [[ $i -gt 0 || "$path" == / ]]
         then
             printf /
             curpath="$curpath/"
         else
-            if [ "$token" = "~" ]
+            if [[ "$token" == "~" ]]
             then
                 etoken="$HOME"
             fi
     fi
-    if [ "$token" ]
+    if [[ "$token" ]]
     then
         curpath="$curpath$etoken"
         printf "$token"
@@ -60,10 +60,10 @@ __git_bash_prompt() {
     else
         cd /
     fi
-        if [ -e .git ]
+        if [[ -e .git ]]
         then
             gitinfo="$(git branch 2>/dev/null | sed -n 's/^* //p')"
-            if [ "$gitinfo" ]
+            if [[ "$gitinfo" ]]
             then
                 # if it starts by "("
                 if [[ "${gitinfo::1}" == "(" ]]
