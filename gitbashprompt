@@ -55,8 +55,8 @@ __git_bash_prompt() {
     if [[ "$token" ]]
     then
         curpath="$curpath$etoken"
-        printf "$token"
-        cd "$etoken"
+        printf -- "$token"
+        cd -- "$etoken"
     else
         cd /
     fi
@@ -70,9 +70,9 @@ __git_bash_prompt() {
                 then
                   gitinfo="$(git describe --all 2>/dev/null ||
                       git rev-list HEAD -1 | cut -c-7)"
-                  printf $col@$dcol"$gitinfo"$pcol
+                  printf -- $col@$dcol"$gitinfo"$pcol
                 else
-                  printf $col@"$gitinfo"$pcol
+                  printf -- $col@"$gitinfo"$pcol
                 fi
             fi
         fi
